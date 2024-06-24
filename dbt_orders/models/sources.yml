@@ -1,0 +1,34 @@
+version: 2
+
+sources:
+  - name: dw_orders
+    schema: raw
+    tables:
+      - name: raw_orders
+        identifier: orders
+        columns:
+          - name: order_hour_of_day
+            tests:
+            - dbt_expectations.expect_column_values_to_be_between:
+                min_value: 0
+                max_value: 23
+          - name: order_date
+            tests:
+            - dbt_expectations.expect_column_values_to_be_of_type:
+                column_type: date
+
+      - name: raw_products
+        identifier: products
+        columns:
+          - name: product_name
+            tests:
+            - dbt_expectations.expect_column_values_to_be_of_type:
+                column_type: varchar
+
+      - name: raw_order_products
+        identifier: order_products
+        columns:
+          - name: add_to_cart_order
+            tests:
+            - dbt_expectations.expect_column_distinct_count_to_be_greater_than:
+                value: 0

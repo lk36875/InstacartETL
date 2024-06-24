@@ -1,0 +1,12 @@
+version: 2
+
+seeds:
+  - name: seed_aisles
+    config:
+      enabled: true
+      alias: aisles
+
+  - name: seed_departments
+    config:
+      enabled: true
+      alias: departments

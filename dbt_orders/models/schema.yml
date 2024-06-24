@@ -1,0 +1,52 @@
+version: 2
+
+
+models:
+  - name: dim_date
+    description: "Contains a date dimension table with granuality of one hour."
+
+  - name: dim_products
+    description: "Contains a product dimension table."
+    columns:
+      - name: product_id
+        description: "Unique identifier for a product."
+        tests:
+          - unique
+          - not_null
+
+      - name: product_name
+        description: "Name of the product."
+        tests:
+          - not_null
+
+  - name: fct_orders
+    description: "Contains an orders fact table."
+    columns:
+      - name: order_id
+        description: "Unique identifier for an order."
+        tests:
+          - not_null
+
+      - name: date_key
+        tests:
+          - relationships:
+              to: ref('dim_date')
+              field: date_key
+
+      - name: product_id
+        tests:
+          - relationships:
+              to: ref('dim_products')
+              field: product_id
+
+
+  - name: stg_order_products
+    description: "Contains a staging table for order products."
+
+  - name: stg_orders
+    description: "Contains a staging table for orders."
+    columns:
+      - name: order_date
+        tests:
+          - dbt_expectations.expect_column_values_to_be_of_type:
+              column_type: date

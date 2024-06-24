@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "snowflake-dbt"
+version = "0.1.0"
+description = ""
+authors = ["Łukasz Główka"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "3.11"
+dbt-snowflake = "^1.7.3"
+python-certifi-win32 = "^1.6.1"
+dagster-dbt = "^0.22.14"
+dagster-webserver = "^1.6.14"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
